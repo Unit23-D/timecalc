@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timecalc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timecalc
+  template:
+    metadata:
+      labels:
+        app: timecalc
+    spec:
+      containers:
+        - name: timecalc
+          image: appleweek/timecalc:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: sqlite-storage
+              mountPath: /data
+      volumes:
+        - name: sqlite-storage
+          persistentVolumeClaim:
+            claimName: timecalc-pvc

@@ -1,0 +1,16 @@
+:root { color-scheme: light dark; }
+body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 24px; }
+.wrap { max-width: 720px; margin: 0 auto; display: grid; gap: 16px; }
+.card { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); border-radius: 12px; padding: 16px; }
+label { display: grid; gap: 6px; margin-bottom: 12px; }
+input { font-size: 16px; padding: 10px; border-radius: 10px; border: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.presets { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 12px; }
+button { padding: 10px 12px; border-radius: 10px; border: 1px solid color-mix(in srgb, currentColor 20%, transparent); background: transparent; cursor: pointer; }
+.result { margin-top: 12px; }
+.big { font-size: 34px; font-weight: 700; }
+.small { opacity: 0.75; margin-top: 6px; }
+.actions { display: flex; gap: 8px; margin-top: 12px; }
+.status { min-height: 1.2em; margin-top: 8px; font-size: 12px; opacity: 0.75; }
+.status.error { color: #b00020; opacity: 1; }
+.row { padding: 10px 0; border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
+.muted { opacity: 0.65; font-size: 12px; }

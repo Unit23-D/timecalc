@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: timecalc-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: timecalc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: timecalc-service
+                port:
+                  number: 80
