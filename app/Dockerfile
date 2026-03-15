@@ -9,6 +9,8 @@ WORKDIR /app/server
 
 RUN npm install --omit=dev
 
+RUN mkdir -p /data
+
 EXPOSE 3000
 
 CMD ["node", "index.js"]
