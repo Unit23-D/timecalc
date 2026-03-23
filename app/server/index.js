@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const db = require("./db");
-const { computeRange } = require("./time");
+const { computeRange, roundDurationMinutes } = require("./time");
 
 const app = express();
 app.use(express.json());
@@ -35,6 +35,14 @@ function parseClientLocalDate(value) {
   return { year, month, day };
 }
 
+function normalizeOptionalDurationMinutes(value) {
+  if (value == null) return null;
+  if (!Number.isInteger(value) || value < 0) {
+    return { error: "durationMinutes must be a non-negative integer" };
+  }
+  return value;
+}
+
 function computeRangeFromClientContext(startTime, endTime, clientLocalDate, clientTzOffsetMinutes) {
   const startMatch = TIME_RE.exec(startTime);
   const endMatch = TIME_RE.exec(endTime);
@@ -66,7 +74,7 @@ function computeRangeFromClientContext(startTime, endTime, clientLocalDate, clie
   return {
     start: new Date(startUtcMs),
     end: new Date(endUtcMs),
-    totalMinutes: Math.round(ms / 60000),
+    totalMinutes: roundDurationMinutes(ms),
     ms
   };
 }
@@ -81,6 +89,7 @@ app.post("/api/entries", (req, res) => {
     endTime,
     preset = null,
     note = null,
+    durationMinutes = null,
     clientLocalDate,
     clientTzOffsetMinutes
   } = req.body || {};
@@ -96,6 +105,11 @@ app.post("/api/entries", (req, res) => {
   const normalizedNote = normalizeOptionalText(note, "note", 1000);
   if (normalizedNote && normalizedNote.error) {
     return res.status(400).json({ error: normalizedNote.error });
+  }
+
+  const normalizedDurationMinutes = normalizeOptionalDurationMinutes(durationMinutes);
+  if (normalizedDurationMinutes && normalizedDurationMinutes.error) {
+    return res.status(400).json({ error: normalizedDurationMinutes.error });
   }
 
   const hasClientDate = clientLocalDate != null;
@@ -119,7 +133,8 @@ app.post("/api/entries", (req, res) => {
     range = computeRange(startTime, endTime, new Date());
   }
 
-  const { start, end, totalMinutes } = range;
+  const { start, end } = range;
+  const totalMinutes = normalizedDurationMinutes ?? range.totalMinutes;
   const createdAt = new Date().toISOString();
 
   const stmt = db.prepare(`

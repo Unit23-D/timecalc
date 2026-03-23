@@ -6,6 +6,10 @@ function combineToday(timeStr, now = new Date()) {
   return d;
 }
 
+function roundDurationMinutes(ms) {
+  return Math.max(0, Math.floor(ms / 60000));
+}
+
 function computeRange(startTimeStr, endTimeStr, now = new Date()) {
   const start = combineToday(startTimeStr, now);
   let end = combineToday(endTimeStr, now);
@@ -16,9 +20,9 @@ function computeRange(startTimeStr, endTimeStr, now = new Date()) {
   }
 
   const ms = end.getTime() - start.getTime();
-  const totalMinutes = Math.round(ms / 60000);
+  const totalMinutes = roundDurationMinutes(ms);
 
   return { start, end, totalMinutes, ms };
 }
 
-module.exports = { computeRange };
+module.exports = { computeRange, roundDurationMinutes };

@@ -62,11 +62,38 @@ function computeRange(startTimeStr, endTimeStr, base = new Date()) {
   return { start, end, ms };
 }
 
-function formatDuration(ms) {
-  const totalMinutes = Math.max(0, Math.floor(ms / 60000));
+function roundDurationMinutes(ms) {
+  return Math.max(0, Math.floor(ms / 60000));
+}
+
+function formatDuration(totalMinutes) {
   const h = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
   return `${h} hours ${m} minutes`;
+}
+
+function getCurrentDurationState(now = new Date()) {
+  if (!startEl.value || !endEl.value) return null;
+
+  const { end } = computeRange(startEl.value, endEl.value, now);
+  const ms = Math.max(0, end.getTime() - now.getTime());
+  const totalMinutes = roundDurationMinutes(ms);
+  const discardedSeconds = Math.floor((ms % 60000) / 1000);
+
+  return {
+    now,
+    end,
+    ms,
+    totalMinutes,
+    discardedSeconds
+  };
+}
+
+function logDurationRounding(state, context) {
+  if (!state || state.discardedSeconds <= 0) return;
+  console.info(
+    `[TimeCalc] ${context}: floor(${state.ms}ms / 60000) = ${state.totalMinutes} minutes; ignoring ${state.discardedSeconds}s`
+  );
 }
 
 function isSameLocalDay(a, b) {
@@ -98,17 +125,14 @@ function formatRecentStart(dt) {
 }
 
 function render() {
-  const s = startEl.value;
-  const e = endEl.value;
-  if (!s || !e) {
+  const state = getCurrentDurationState(new Date());
+  if (!state) {
     durationEl.textContent = "—";
     endsAtEl.textContent = "—";
     return;
   }
-  const { end } = computeRange(s, e, new Date());
-  const msLeft = end.getTime() - Date.now();
-  durationEl.textContent = formatDuration(msLeft);
-  endsAtEl.textContent = formatEndsAtLabel(end, new Date());
+  durationEl.textContent = formatDuration(state.totalMinutes);
+  endsAtEl.textContent = formatEndsAtLabel(state.end, state.now);
 }
 
 async function loadRecent() {
@@ -151,12 +175,17 @@ saveBtn.addEventListener("click", async () => {
 
   try {
     const now = new Date();
+    const durationState = getCurrentDurationState(now);
+    if (!durationState) return;
+    logDurationRounding(durationState, "save");
+
     const r = await fetch("/api/entries", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         startTime: startEl.value,
         endTime: endEl.value,
+        durationMinutes: durationState.totalMinutes,
         preset: selectedPreset,
         clientLocalDate: localDateYYYYMMDD(now),
         clientTzOffsetMinutes: now.getTimezoneOffset()
