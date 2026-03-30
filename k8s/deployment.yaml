@@ -17,7 +17,7 @@ spec:
       containers:
         - name: timecalc
           # CI updates this tag to the pushed commit SHA so Argo CD deploys immutably.
-          image: appleweek/timecalc:latest
+          image: appleweek/timecalc:de6a0ee
           imagePullPolicy: Always
           ports:
             - name: http
