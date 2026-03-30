@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: timecalc-data
+  labels:
+    app: timecalc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      # Keep storage explicit so Argo CD manages the full app footprint.
+      storage: 1Gi
+  storageClassName: longhorn

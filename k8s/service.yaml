@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: timecalc
+  labels:
+    app: timecalc
+spec:
+  # ClusterIP keeps the service internal; Ingress handles external access.
+  type: ClusterIP
+  selector:
+    app: timecalc
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
