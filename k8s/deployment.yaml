@@ -17,7 +17,7 @@ spec:
       containers:
         - name: timecalc
           # Use a Docker Hub image so Argo CD can deploy directly from Git.
-          image: appleweek/timecalc:v2
+          image: appleweek/timecalc:latest
           imagePullPolicy: Always
           ports:
             - name: http
