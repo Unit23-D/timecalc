@@ -232,7 +232,11 @@ if (clearAllBtn) {
 
 // Init
 startEl.value = timeNowHHMM();
-endEl.value = "06:20";
+const defaultPresetButton = document.querySelector("button[data-time]");
+if (defaultPresetButton) {
+  endEl.value = defaultPresetButton.dataset.time || "";
+  selectedPreset = defaultPresetButton.dataset.preset || null;
+}
 render();
 loadRecent();
 setInterval(render, 1000);
