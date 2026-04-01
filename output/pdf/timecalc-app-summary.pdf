@@ -1,0 +1,252 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 3197 >>
+stream
+0.96 0.97 0.99 rg
+36 726 540 40 re f
+0 0 0 rg
+BT
+/F2 20 Tf
+48 750 Td
+(TimeCalc App Summary) Tj
+ET
+BT
+/F1 10 Tf
+48 730 Td
+(Repo-based one-page overview) Tj
+ET
+BT
+/F2 12 Tf
+48 690 Td
+(What It Is) Tj
+ET
+BT
+/F1 10 Tf
+48 672 Td
+(A small Express and SQLite web app) Tj
+0 -12 Td
+(for tracking time ranges and) Tj
+0 -12 Td
+(recent entries.) Tj
+ET
+BT
+/F1 10 Tf
+48 632 Td
+(Users enter start and end times in) Tj
+0 -12 Td
+(the browser, see a live countdown,) Tj
+0 -12 Td
+(and save entries through a JSON) Tj
+0 -12 Td
+(API.) Tj
+ET
+BT
+/F2 12 Tf
+48 574 Td
+(Who It Is For) Tj
+ET
+BT
+/F1 10 Tf
+48 556 Td
+(People who want a lightweight) Tj
+0 -12 Td
+(personal tool to calculate time) Tj
+0 -12 Td
+(ranges and keep a short recent) Tj
+0 -12 Td
+(history of saved entries.) Tj
+ET
+BT
+/F2 12 Tf
+48 498 Td
+(How To Run) Tj
+ET
+BT
+/F1 10 Tf
+54 480 Td
+(- cd) Tj
+0 -12 Td
+(  /Users/dev/timecalc/app/server) Tj
+ET
+BT
+/F1 10 Tf
+54 452 Td
+(- npm install) Tj
+ET
+BT
+/F1 10 Tf
+54 436 Td
+(- node index.js) Tj
+ET
+BT
+/F1 10 Tf
+54 420 Td
+(- Open http://localhost:3000) Tj
+ET
+BT
+/F2 12 Tf
+48 398 Td
+(Repo Notes) Tj
+ET
+BT
+/F1 10 Tf
+48 380 Td
+(Tests: Not found in repo.) Tj
+ET
+BT
+/F1 10 Tf
+48 364 Td
+(Authentication or multi-user) Tj
+0 -12 Td
+(support: Not found in repo.) Tj
+ET
+BT
+/F2 12 Tf
+320 690 Td
+(What It Does) Tj
+ET
+BT
+/F1 10 Tf
+326 672 Td
+(- Accepts start and end times with) Tj
+0 -12 Td
+(  native browser time inputs.) Tj
+ET
+BT
+/F1 10 Tf
+326 644 Td
+(- Includes preset buttons for) Tj
+0 -12 Td
+(  weekday 6:20 and weekend 10:00) Tj
+0 -12 Td
+(  end times.) Tj
+ET
+BT
+/F1 10 Tf
+326 604 Td
+(- Shows a live remaining duration) Tj
+0 -12 Td
+(  and an ends today/tomorrow label.) Tj
+ET
+BT
+/F1 10 Tf
+326 576 Td
+(- Lets users save calculated) Tj
+0 -12 Td
+(  entries through POST) Tj
+0 -12 Td
+(  /api/entries.) Tj
+ET
+BT
+/F1 10 Tf
+326 536 Td
+(- Lists recent saved entries from) Tj
+0 -12 Td
+(  SQLite through GET /api/entries.) Tj
+ET
+BT
+/F1 10 Tf
+326 508 Td
+(- Supports clearing all saved) Tj
+0 -12 Td
+(  entries with DELETE /api/entries.) Tj
+ET
+BT
+/F2 12 Tf
+320 474 Td
+(How It Works) Tj
+ET
+BT
+/F1 10 Tf
+320 456 Td
+(Frontend: /app/public/index.html,) Tj
+0 -12 Td
+(app.js, and styles.css render the UI,) Tj
+0 -12 Td
+(compute the live countdown in the) Tj
+0 -12 Td
+(browser, and call the API.) Tj
+ET
+BT
+/F1 10 Tf
+320 404 Td
+(API: /app/server/index.js serves) Tj
+0 -12 Td
+(static files and exposes create,) Tj
+0 -12 Td
+(list, and clear entry routes.) Tj
+ET
+BT
+/F1 10 Tf
+320 364 Td
+(Time logic: /app/server/time.js) Tj
+0 -12 Td
+(calculates ranges and handles) Tj
+0 -12 Td
+(overnight end times by rolling to the) Tj
+0 -12 Td
+(next day when needed.) Tj
+ET
+BT
+/F1 10 Tf
+320 312 Td
+(Storage: /app/server/db.js opens) Tj
+0 -12 Td
+(better-sqlite3, creates the entries) Tj
+0 -12 Td
+(table, and resolves the database path) Tj
+0 -12 Td
+(from TIMECALC_DB_PATH, /data, or a) Tj
+0 -12 Td
+(local file.) Tj
+ET
+BT
+/F1 10 Tf
+320 248 Td
+(Deploy path: Docker runs the Node) Tj
+0 -12 Td
+(server; Kubernetes adds a Deployment,) Tj
+0 -12 Td
+(Service, Ingress, and PVC so the app) Tj
+0 -12 Td
+(can persist SQLite data at) Tj
+0 -12 Td
+(/data/timecalc.sqlite.) Tj
+ET
+BT
+/F1 8 Tf
+48 54 Td
+(Evidence sources: README.md, app/server/*, app/public/*, app/Dockerfile, k8s/*) Tj
+ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000257 00000 n 
+0000000327 00000 n 
+0000000402 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+3651
+%%EOF
